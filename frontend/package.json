@@ -25,11 +25,13 @@
   "author": "suxxus",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.3.4",
     "favicons-webpack-plugin": "^6.0.0",
     "json-decoder": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.1.1",
     "react-router-dom": "^6.8.1",
     "sanitize-html": "^2.10.0",
     "styled-components": "^5.3.9",
