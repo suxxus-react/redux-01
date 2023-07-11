@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "jsx": "react"
+  },
+
+  "baseUrl": "./types",
+  "typeRoots": ["./src/*.ds.t", "./node_modules/@types/"],
+  "exclude": ["node_modules", "jest.config.js"],
+  "include": ["src"]
+}

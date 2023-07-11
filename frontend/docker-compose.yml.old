@@ -1,0 +1,16 @@
+version: "0"
+name: tpl
+services:
+  frontend:
+    image: dev/tpl
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    container_name: dev__tpl
+    volumes:
+      - .:/app
+      - ./src:/app
+      - ./public:/app
+      - ./node_modules:/app
+    ports:
+      - 3112:4000

@@ -1,0 +1,27 @@
+version: "0"
+services:
+  reverse-proxy:
+    image: nginx:1.17.10
+    container_name: reverse_proxy
+    depends_on:
+      - tpl-preprod-frontend
+      - tpl-preprod-server
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8110:80
+
+  tpl-preprod-frontend:
+    image: frontend/tpl-frontend
+    container_name: tpl-preprod-frontend
+    depends_on:
+      - tpl-preprod-server
+    build:
+      context: ./frontend
+
+  tpl-preprod-server:
+    image: server/tpl-server
+    container_name: tpl-preprod-server
+    build:
+      context: ./server
+    restart: on-failure

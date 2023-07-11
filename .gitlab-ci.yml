@@ -1,0 +1,45 @@
+image: node:latest
+stages:
+  - test
+  - lint
+  - build
+
+variables:
+  FE_DIR: "./frontend/"
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - $FE_DIR/node_modules/
+
+before_script:
+  - node --version
+  - 'echo "Script start: $(date +"%Y-%m-%d %T")"'
+
+after_script:
+  - 'echo "Script end: $(date +"%Y-%m-%d %T")"'
+
+eslint:
+  stage: lint
+  script:
+    - npm i
+    - npm run lint
+
+run_tests:
+  stage: test
+  script:
+    - cd $FE_DIR
+    - npm i npm@latest -g
+    - npm i
+    - npm test
+
+run_build:
+  stage: build
+  script:
+    - cd $FE_DIR
+    - npm i
+    - npm run test
+    - npm run lint
+    - npm run build

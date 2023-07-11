@@ -1,2 +1,3 @@
-# redux-01
-react-redux
+# Start react project
+
+start a react application template (webpack, server, docker, typescript)
