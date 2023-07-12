@@ -13,6 +13,9 @@ const api = createApi({
         query: (url: string) => {
           return { url, method: "GET" };
         },
+        transformResponse: (response: unknown) => {
+          return response;
+        },
       }),
     };
   },
