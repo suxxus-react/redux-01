@@ -5,35 +5,35 @@ export type Children = {
   children: React.ReactNode;
 };
 
-export type Maybe<T> = T | Nothing;
+type Dict<T> = Record<string, T>;
 
-export type Card = {
-  id: number;
-  name: string;
-  src: string;
-  domain: string;
-  email: string;
-};
+export type Maybe<T> = T | Nothing;
 
 export type Theme = {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 };
 
-export type UserData = {
+export type UserDto = {
   id: number;
   firstName: string;
   lastName: string;
   birthDate: string;
-  image: string;
   email: string;
   phone: string;
+  image: string;
   domain: string;
 };
 
-type Dict<T> = Record<string, T>;
+export type UserCard = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  image: string;
+};
 
+//
 export type Users = {
   ids: number[];
-  data: Dict<UserData>;
+  entities: Dict<UserCard>;
 };

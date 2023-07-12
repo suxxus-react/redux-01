@@ -21,12 +21,7 @@ function Page({ url }: { url: string }): JSX.Element {
   }
 
   if (data) {
-    return (
-      <>
-        <h1>hey</h1>
-        {JSON.stringify(data)}
-      </>
-    );
+    return <ul>{JSON.stringify(data)}</ul>;
   }
 
   return <></>;
