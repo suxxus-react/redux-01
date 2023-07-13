@@ -1,18 +1,30 @@
 {
-  "name": "server",
+  "name": "redux-01",
   "version": "0.0.0",
-  "description": "",
+  "description": "learn-redux",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suxxus-studies-others/Implementing-OAuth.git"
+  },
+  "keywords": [
+    "studies",
+    "oauth"
+  ],
+  "author": "suxxus",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "axios": "^0.26.0",
+    "cors": "2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.1",
+    "pug": "^3.0.2"
   },
-  "type": "module",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=0.10.3"
   }
 }
