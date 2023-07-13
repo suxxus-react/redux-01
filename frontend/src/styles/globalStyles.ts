@@ -20,6 +20,8 @@ const commonVariables = `
   --user-preview-bg: #f2f1f1;
   --header-bg: #0A0A08;
   --header-color: white;
+  --button-border-color: #aca5a5;
+  --button-bg-hover: #f2ecec;
 `;
 
 const lightTheme = `
