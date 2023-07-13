@@ -3,7 +3,7 @@ import { createEntityAdapter } from "@reduxjs/toolkit";
 import { axiosBaseQuery } from "./axiosBaseQuery";
 import { userDataDecoder } from "../../utils";
 import constants from "../../constants";
-import { Nothing, UserCard, Users } from "../../types";
+import { Nothing, UserCard } from "../../types";
 
 const api = createApi({
   reducerPath: "usersApi",
@@ -43,4 +43,6 @@ const api = createApi({
   },
 });
 
-export const { useGetUsersQuery, reducer, reducerPath, middleware } = api;
+export const { useGetUsersQuery, reducerPath, middleware } = api;
+
+export default api.reducer;

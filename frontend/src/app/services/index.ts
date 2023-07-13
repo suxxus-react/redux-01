@@ -1,2 +1,5 @@
-import { useGetUsersQuery, reducerPath, reducer } from "./api";
-export { useGetUsersQuery, reducer, reducerPath };
+import apiReducer from "./api";
+
+export * from "./api";
+
+export { apiReducer };
