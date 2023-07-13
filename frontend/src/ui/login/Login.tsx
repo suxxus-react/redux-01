@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { device } from "../../styles/globalStyles";
+import { FormEvent } from "../../types";
 
 const LoginOption = styled.div`
   border: 1px solid var(--button-border-color);
@@ -33,10 +34,15 @@ const LoginWrapper = styled.div`
 `;
 
 export function Login() {
+  //
+  const onSubmitHandler = (evt: FormEvent) => {
+    evt.preventDefault();
+  };
+
   return (
     <LoginWrapper>
       <h2>Welcome, please login with</h2>
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <LoginOption role="button" data-testid="github-login-button">
           <i className="fa fa-github" aria-hidden="true"></i>
           <input type="submit" value="GitHub" />

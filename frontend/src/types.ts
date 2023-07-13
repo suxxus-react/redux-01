@@ -1,6 +1,9 @@
 export const Nothing = Symbol("nothing");
 type Nothing = typeof Nothing;
 
+export type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type FormEvent = React.FormEvent<HTMLFormElement>;
+
 export type Children = {
   children: React.ReactNode;
 };
