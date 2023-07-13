@@ -13,7 +13,15 @@ type Story = StoryObj<typeof App>;
 export const Basic: Story = {
   parameters: {
     reactRouter: {
-      routePath: "/",
+      browserPath: "/",
+    },
+  },
+};
+
+export const Logged: Story = {
+  parameters: {
+    reactRouter: {
+      browserPath: "/welcome",
     },
   },
 };

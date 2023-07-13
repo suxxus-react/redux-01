@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 //
 import { GlobalStyles } from "./styles/globalStyles";
 //
-import { Header, Main } from "./ui";
+import { Header, Login, Main } from "./ui";
 //
 import { ToggleThemeContextProvider } from "./context";
 //
@@ -19,7 +19,8 @@ export default function App(): JSX.Element {
       <GlobalStyles />
       <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/welcome" element={<Main />} />
       </Routes>
     </Providers>
   );
