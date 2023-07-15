@@ -24,6 +24,20 @@ export type UserToken = {
   token: Token<string> | null;
 };
 
+export type GithubUserDto = {
+  id: number;
+  name: string;
+  avatar_url: string;
+  email?: string | null;
+};
+
+export type GithubUser = {
+  id: string;
+  name: string;
+  avatar: string;
+  email: string;
+};
+
 export type UserDto = {
   id: number;
   firstName: string;

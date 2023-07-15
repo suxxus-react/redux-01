@@ -1,10 +1,11 @@
-import { userDataDecoder } from "./jsonDecoder";
+import { userDataDecoder, githubUserDecoder } from "./jsonDecoder";
 import usersData from "../mocks/data.users.json";
-import { Nothing } from "../types";
+import gitnubUser from "../mocks/data.github.user.json";
+import { Nothing, GithubUserDto } from "../types";
 
 const firstIndex = 0;
 
-describe("userData decoded", () => {
+describe("JSON decoder", () => {
   test("user data decoded ok ", () => {
     const actual = [
       {
@@ -42,5 +43,25 @@ describe("userData decoded", () => {
     console.error = jest.fn();
     expect(userDataDecoder(actual)).toBe(Nothing);
     expect(console.error).toHaveBeenCalled();
+  });
+
+  test("Github user dcoded ok", () => {
+    const actual = { ...gitnubUser };
+
+    const expected: GithubUserDto = {
+      id: 1122233,
+      avatar_url: "https://avatars.githubusercontent.com/u/1122233?v=4",
+      name: "michelle",
+      email: null,
+    };
+
+    expect(actual).toEqual({
+      id: 1122233,
+      avatar_url: "https://avatars.githubusercontent.com/u/1122233?v=4",
+      name: "michelle",
+      email: null,
+    });
+
+    expect(githubUserDecoder(actual)).toEqual(expected);
   });
 });

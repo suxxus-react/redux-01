@@ -69,7 +69,7 @@ describe("Local storage", () => {
     expect(localStorage.__STORE__[KEY]).toBe(VALUE);
     expect(Object.keys(localStorage.__STORE__).length).toBe(one);
 
-    const actual: Maybe<Token<string>> = getTokenFromStorage(KEY);
+    const actual: Maybe<Token<string>> = getTokenFromStorage();
     expect(actual).toBe(VALUE);
   });
 

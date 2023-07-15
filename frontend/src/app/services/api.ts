@@ -1,9 +1,13 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { axiosBaseQuery } from "./axiosBaseQuery";
-import { userDataDecoder } from "../../utils";
+import { userDataDecoder, githubUserDecoder } from "../../utils";
 import constants from "../../constants";
-import { Nothing, UserCard } from "../../types";
+import { Nothing, UserCard, GithubUser } from "../../types";
+
+const headers = {
+  "X-Auth-Token": "xxxxxsd token",
+};
 
 const api = createApi({
   reducerPath: "usersApi",
@@ -12,6 +16,31 @@ const api = createApi({
   }),
   endpoints(build) {
     return {
+      getGithubUser: build.query({
+        query: (url: string) => {
+          return { url, method: "GET", headers };
+        },
+        //
+        transformResponse: (response) => {
+          // TODO decode
+          const responseDecoded = githubUserDecoder(response);
+          const decodedOk = responseDecoded !== Nothing;
+
+          if (decodedOk) {
+            //
+            const user: GithubUser = {
+              ...responseDecoded,
+              id: responseDecoded.id.toString(),
+              avatar: responseDecoded.avatar_url,
+              email: responseDecoded.email || "",
+            };
+
+            return user;
+          }
+
+          return {};
+        },
+      }),
       getUsers: build.query({
         query: (url: string) => {
           return { url, method: "GET" };
@@ -43,6 +72,11 @@ const api = createApi({
   },
 });
 
-export const { useGetUsersQuery, reducerPath, middleware } = api;
+export const {
+  useGetUsersQuery,
+  useGetGithubUserQuery,
+  reducerPath,
+  middleware,
+} = api;
 
 export default api.reducer;

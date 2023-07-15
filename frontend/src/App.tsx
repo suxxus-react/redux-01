@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes, useSearchParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useLocation, useSearchParams } from "react-router-dom";
 
 import { Provider } from "react-redux";
 //
@@ -13,7 +13,11 @@ import { Children } from "./types";
 //
 import { store, useAppDispatch, updateToken } from "./app";
 //
-import { setTokenOnStorage } from "./utils";
+import { getTokenFromStorage, setTokenOnStorage } from "./utils";
+//
+import constants from "./constants";
+
+const { ROUTES } = constants;
 
 function Providers({ children }: Children): JSX.Element {
   return (
@@ -37,13 +41,25 @@ function SignIn(): JSX.Element {
 }
 
 export default function App(): JSX.Element {
+  const location = useLocation();
+
+  useEffect(() => {
+    const isNotSignin = location.pathname !== ROUTES.SIGIN;
+    // check if other than SignIn
+    if (isNotSignin) {
+      // check if we have the token on storage
+      console.info("location", location.pathname);
+      console.info("token from storage ", getTokenFromStorage());
+    }
+  }, [location]);
+
   return (
     <Providers>
       <GlobalStyles />
       <Header />
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path={ROUTES.HOME} element={<Login />} />
+        <Route path={ROUTES.SIGIN} element={<SignIn />} />
         <Route path="/welcome" element={<Main />} />
       </Routes>
     </Providers>

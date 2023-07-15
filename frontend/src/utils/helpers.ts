@@ -15,8 +15,8 @@ export function removeItem(key: string) {
   localStorage.removeItem(key);
 }
 
-export function getTokenFromStorage(key: string): Maybe<Token<string>> {
-  return getItem(key) || Nothing;
+export function getTokenFromStorage(): Maybe<Token<string>> {
+  return getItem(STORAGE_TOKEN) || Nothing;
 }
 
 export function setTokenOnStorage(value: string) {

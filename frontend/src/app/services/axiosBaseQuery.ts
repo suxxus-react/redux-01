@@ -10,16 +10,18 @@ type BaseUrl = {
 type Props = {
   url: string;
   method: AxiosRequestConfig["method"];
+  headers?: AxiosRequestConfig["headers"];
   data?: AxiosRequestConfig["data"];
   params?: AxiosRequestConfig["params"];
 };
 
 export const axiosBaseQuery =
   ({ baseUrl }: BaseUrl): BaseQueryFn<Props, ReturnData, ReturnData> =>
-  async ({ url, method, data, params }: Props) => {
+  async ({ url, headers, method, data, params }: Props) => {
     try {
       const result = await axios({
         url: `${baseUrl}${url}`,
+        headers,
         method,
         data,
         params,
