@@ -7,6 +7,6 @@ describe("<Login /> ", () => {
     const welcomeMsg = "Welcome, please login with";
     render(<Login />, {});
     screen.getByText(welcomeMsg);
-    screen.getByTestId("github-login-button");
+    screen.getByTestId("auth-with-github");
   });
 });

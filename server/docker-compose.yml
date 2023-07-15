@@ -2,7 +2,6 @@ version: "3"
 name: server-tpl
 services:
   server:
-    env_file: .env
     image: server/tpl
     build:
       context: .
@@ -10,7 +9,7 @@ services:
     container_name: dev__server-tpl
     volumes:
       - .:/app
+      - ./src:/app
       - ./node_modules:/app
-      - ./public:/app
     ports:
       - 7711:7711

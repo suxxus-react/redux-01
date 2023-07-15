@@ -4,7 +4,7 @@ import User from "./User";
 import { UserCard } from "../../types";
 
 const Props: UserCard = {
-  id: 1,
+  id: "1",
   firstName: "John",
   lastName: "Doe",
   image: "http://",

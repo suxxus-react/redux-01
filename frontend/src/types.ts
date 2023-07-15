@@ -2,6 +2,7 @@ export const Nothing = Symbol("nothing");
 type Nothing = typeof Nothing;
 
 export type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type ClickEvent = React.MouseEvent<HTMLElement>;
 export type FormEvent = React.FormEvent<HTMLFormElement>;
 
 export type Children = {
@@ -17,6 +18,12 @@ export type Theme = {
   isDarkMode: boolean;
 };
 
+export type Token<T> = T | null;
+
+export type UserToken = {
+  token: Token<string> | null;
+};
+
 export type UserDto = {
   id: number;
   firstName: string;
@@ -29,7 +36,7 @@ export type UserDto = {
 };
 
 export type UserCard = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   image: string;
@@ -37,6 +44,6 @@ export type UserCard = {
 
 //
 export type Users = {
-  ids: number[];
+  ids: string[];
   entities: Dict<UserCard>;
 };

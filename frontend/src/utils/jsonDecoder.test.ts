@@ -2,11 +2,13 @@ import { userDataDecoder } from "./jsonDecoder";
 import usersData from "../mocks/data.users.json";
 import { Nothing } from "../types";
 
+const firstIndex = 0;
+
 describe("userData decoded", () => {
   test("user data decoded ok ", () => {
     const actual = [
       {
-        ...usersData.at(0),
+        ...usersData.at(firstIndex),
       },
     ];
 
@@ -30,12 +32,12 @@ describe("userData decoded", () => {
   test("user data decoded error ", () => {
     const actual = [
       {
-        ...usersData.at(0),
+        ...usersData.at(firstIndex),
         id: null,
       },
     ];
 
-    expect(actual.at(0)?.id).toBe(null);
+    expect(actual.at(firstIndex)?.id).toBe(null);
 
     console.error = jest.fn();
     expect(userDataDecoder(actual)).toBe(Nothing);

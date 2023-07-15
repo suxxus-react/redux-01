@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { apiReducer, reducerPath, middleware } from "./services";
-import { usersReducer } from "./features";
+import { usersReducer, authReducer } from "./features";
+
 import { combineReducers } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
   [reducerPath]: apiReducer,
   users: usersReducer,
+  auth: authReducer,
 });
 
 export const store = configureStore({

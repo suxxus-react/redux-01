@@ -17,9 +17,9 @@ describe("UsersSlice", () => {
     const actual = initialState;
 
     const expected: Users = {
-      ids: [1],
+      ids: ["1"],
       entities: {
-        1: { id: 1, firstName: "Anne", lastName: "Don", image: "http://" },
+        1: { id: "1", firstName: "Anne", lastName: "Don", image: "http://" },
       },
     };
 
@@ -29,10 +29,10 @@ describe("UsersSlice", () => {
       userReducer(
         actual,
         addMany({
-          ids: [1],
+          ids: ["1"],
           entities: {
             1: {
-              id: 1,
+              id: "1",
               firstName: "Anne",
               lastName: "Don",
               image: "http://",

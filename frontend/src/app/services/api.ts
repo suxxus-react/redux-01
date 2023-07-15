@@ -28,7 +28,7 @@ const api = createApi({
             return usersAdapter.addMany(
               usersAdapter.getInitialState(),
               responseDecoded.map(({ id, firstName, lastName, image }) => ({
-                id,
+                id: id.toString(),
                 firstName,
                 lastName,
                 image,
