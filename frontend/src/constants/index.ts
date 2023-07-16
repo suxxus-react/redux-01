@@ -16,5 +16,5 @@ export default Object.freeze({
     USERS: "/users",
   },
 
-  GITHUB_AUTH: process.env.GITHUB_AUTH || "",
+  GITHUB_AUTH: process.env.GITHUB_AUTH || "/",
 });

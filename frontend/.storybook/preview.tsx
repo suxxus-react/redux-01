@@ -1,8 +1,10 @@
 import * as React from "react";
+import { Provider } from "react-redux";
 import type { Preview } from "@storybook/react";
 import { GlobalStyles } from ".././src/styles/globalStyles";
 import { withRouter } from "storybook-addon-react-router-v6";
 import { ToggleThemeContextProvider } from "../src/context";
+import { store } from "../src/app";
 import { usersJson } from "../src/mocks";
 import constants from "../src/constants";
 
@@ -25,13 +27,14 @@ const fetchMock = {
   ],
 };
 
-/* eslint-disable-next-line */
 const DefaultDecorator = (Story: any) => {
   return (
-    <ToggleThemeContextProvider>
-      <GlobalStyles />
-      <Story />
-    </ToggleThemeContextProvider>
+    <Provider store={store}>
+      <ToggleThemeContextProvider>
+        <GlobalStyles />
+        <Story />
+      </ToggleThemeContextProvider>
+    </Provider>
   );
 };
 
