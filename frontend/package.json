@@ -14,7 +14,7 @@
     "cy:predeploy:ci": "npx cypress run --config-file ./cypress/deploy/cypress.config.ts",
     "prettier": "npx prettier src --check",
     "test": "jest ./src/*",
-    "test:watch": "jest --watch  --verbose ./src/utils/*",
+    "test:watch": "jest --watch  --verbose ./src/*",
     "test:components": "jest --watch  ./src/ui/*",
     "check:prj": "run-s tsc test lint",
     "storybook": "storybook dev -p 6006",

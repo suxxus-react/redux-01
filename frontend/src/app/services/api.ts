@@ -9,7 +9,7 @@ const headers = {
 };
 
 const api = createApi({
-  reducerPath: "usersApi",
+  reducerPath: "Api",
   baseQuery: axiosBaseQuery({
     baseUrl: constants.BASE_URL,
   }),

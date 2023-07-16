@@ -3,7 +3,7 @@ export default Object.freeze({
 
   ROUTES: {
     HOME: "/",
-    SIGIN: "/sigin",
+    SIGIN: "/signin",
   },
 
   //
