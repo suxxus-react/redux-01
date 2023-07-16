@@ -48,8 +48,8 @@ export default function App(): JSX.Element {
     // check if other than SignIn
     if (isNotSignin) {
       // check if we have the token on storage
-      console.info("location", location.pathname);
-      console.info("token from storage ", getTokenFromStorage());
+      // console.info("location", location.pathname);
+      // console.info("token from storage ", getTokenFromStorage());
     }
   }, [location]);
 
