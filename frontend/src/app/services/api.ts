@@ -1,9 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createEntityAdapter } from "@reduxjs/toolkit";
 import { axiosBaseQuery } from "./axiosBaseQuery";
-import { userDataDecoder, githubUserDecoder } from "../../utils";
+import { githubUserDecoder } from "../../utils";
 import constants from "../../constants";
-import { Nothing, UserCard, GithubUser } from "../../types";
+import { Nothing, GithubUser } from "../../types";
 
 const headers = {
   "X-Auth-Token": "xxxxxsd token",
@@ -22,7 +21,6 @@ const api = createApi({
         },
         //
         transformResponse: (response) => {
-          // TODO decode
           const responseDecoded = githubUserDecoder(response);
           const decodedOk = responseDecoded !== Nothing;
 
@@ -41,42 +39,10 @@ const api = createApi({
           return {};
         },
       }),
-      getUsers: build.query({
-        query: (url: string) => {
-          return { url, method: "GET" };
-        },
-        transformResponse: (response: unknown) => {
-          const responseDecoded = userDataDecoder(response);
-          const decodeOk = responseDecoded !== Nothing;
-
-          if (decodeOk) {
-            const usersAdapter = createEntityAdapter<UserCard>({
-              sortComparer: (a, b) => a.firstName.localeCompare(b.firstName),
-            });
-
-            return usersAdapter.addMany(
-              usersAdapter.getInitialState(),
-              responseDecoded.map(({ id, firstName, lastName, image }) => ({
-                id: id.toString(),
-                firstName,
-                lastName,
-                image,
-              }))
-            );
-          }
-
-          return [];
-        },
-      }),
     };
   },
 });
 
-export const {
-  useGetUsersQuery,
-  useGetGithubUserQuery,
-  reducerPath,
-  middleware,
-} = api;
+export const { useGetGithubUserQuery, reducerPath, middleware } = api;
 
 export default api.reducer;

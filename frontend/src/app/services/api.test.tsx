@@ -2,7 +2,7 @@ import React from "react";
 import { setupServer } from "msw/node";
 
 import { render, screen, waitFor } from "../../ui/testUtils";
-import { useGetGithubUserQuery, useGetUsersQuery } from "./api";
+import { useGetGithubUserQuery } from "./api";
 import { handlers } from "../../mocks";
 
 import constants from "../../constants";
@@ -17,9 +17,6 @@ function Page({ url }: { url: string }): JSX.Element {
   switch (url) {
     case API.GUITHUB_USER:
       fn = useGetGithubUserQuery;
-      break;
-    case API.USERS:
-      fn = useGetUsersQuery;
       break;
     default:
       fn = () => ({
@@ -51,13 +48,6 @@ describe("Api", () => {
   beforeAll(() => server.listen());
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
-
-  test("useGetUsersQuery", async () => {
-    render(<Page url={API.USERS} />, {});
-    await waitFor(() => {
-      screen.getByText(/Sheldon/i);
-    });
-  });
 
   test("useGetUserDataQuery", async () => {
     render(<Page url={API.GUITHUB_USER} />, {});

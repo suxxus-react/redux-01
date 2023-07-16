@@ -9,7 +9,7 @@ export type Children = {
   children: React.ReactNode;
 };
 
-type Dict<T> = Record<string, T>;
+export type Dict<T> = Record<string, T>;
 
 export type Maybe<T> = T | Nothing;
 
@@ -38,26 +38,9 @@ export type GithubUser = {
   email: string;
 };
 
-export type UserDto = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  email: string;
-  phone: string;
-  image: string;
-  domain: string;
-};
-
 export type UserCard = {
   id: string;
   firstName: string;
   lastName: string;
   image: string;
-};
-
-//
-export type Users = {
-  ids: string[];
-  entities: Dict<UserCard>;
 };
