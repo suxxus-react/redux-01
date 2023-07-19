@@ -12,12 +12,12 @@ const headers = () => {
   let value = "";
   const tok = getTokenFromStorage();
 
-  switch (status) {
+  switch (status.kind) {
     case "Unknown":
       value = tok !== Nothing ? tok : "";
       break;
     case "LoggedIn":
-      value = String((status as LoggedIn).token);
+      value = status.token;
       break;
     default:
       value = "";
@@ -36,6 +36,15 @@ const api = createApi({
   }),
   endpoints(build) {
     return {
+      logout: build.query({
+        query: (url: string) => {
+          return {
+            url,
+            method: "GET",
+            headers: headers(),
+          };
+        },
+      }),
       getGithubUser: build.query({
         query: (url: string) => {
           return {
@@ -61,6 +70,7 @@ const api = createApi({
                 email: email ? email : "",
               },
               token,
+              kind: "LoggedIn",
             };
           }
 
@@ -71,6 +81,11 @@ const api = createApi({
   },
 });
 
-export const { useGetGithubUserQuery, reducerPath, middleware } = api;
+export const {
+  useGetGithubUserQuery,
+  useLogoutQuery,
+  reducerPath,
+  middleware,
+} = api;
 
 export default api.reducer;

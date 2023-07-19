@@ -3,7 +3,7 @@ import { Auth, LoggedIn } from "../../types";
 import { setAuthentication } from "./";
 
 const initialState: Auth = {
-  status: "LoggedOut",
+  status: { kind: "LoggedOut" },
 };
 
 describe("AuthSlice", () => {
@@ -20,9 +20,10 @@ describe("AuthSlice", () => {
         email: "e@xx",
       },
       token: "xx",
+      kind: "LoggedIn",
     };
 
-    const actual: Auth = { status: "Unknown" };
+    const actual: Auth = { status: { kind: "Unknown" } };
 
     const expected: Auth = {
       status: {
@@ -33,12 +34,13 @@ describe("AuthSlice", () => {
           email: "e@xx",
         },
         token: "xx",
+        kind: "LoggedIn",
       },
     };
 
-    expect(authSlice(initialState, setAuthentication("Unknown"))).toEqual(
-      actual
-    );
+    expect(
+      authSlice(initialState, setAuthentication({ kind: "Unknown" }))
+    ).toEqual(actual);
     expect(authSlice(actual, setAuthentication(authStatus))).toEqual(expected);
   });
 });

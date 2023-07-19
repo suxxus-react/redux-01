@@ -17,6 +17,7 @@ export const Basic: Story = {};
 
 const MockState: Auth = {
   status: {
+    kind: "LoggedIn",
     token: "xx",
     user: {
       id: 123,

@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { Auth, AuthenticationStatus } from "../../types";
 
 const initialState: Auth = {
-  status: "LoggedOut",
+  status: { kind: "LoggedOut" },
 };
 
 const authSlice = createSlice({

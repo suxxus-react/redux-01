@@ -4,6 +4,7 @@ import {
   removeItem,
   getTokenFromStorage,
   setTokenOnStorage,
+  removeTokenFromStorage,
 } from "./";
 import constants from "../constants";
 import { Maybe, Token } from "../types";
@@ -84,5 +85,18 @@ describe("Local storage", () => {
 
     setTokenOnStorage(VALUE);
     expect(getItem(KEY)).toBe(expected);
+  });
+
+  test("Given the token should set on localStorage", () => {
+    const KEY = STORAGE_TOKEN;
+    const VALUE = "fizz";
+
+    const actual = "fizz";
+    setItem(KEY, VALUE);
+
+    expect(getItem(KEY)).toBe(actual);
+    removeTokenFromStorage();
+
+    expect(getItem(KEY)).toBe(null);
   });
 });

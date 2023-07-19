@@ -55,6 +55,10 @@ app.get("/oauth/redirect", (req, res) => {
     });
 });
 
+// ===============================
+// FAKE AUTH
+// ===============================
+
 app.get("/login/oauth/authorize", (req, res) => {
   // fake oauth service
   const redirect = req.query.redirect_uri;
@@ -81,6 +85,10 @@ app.get("/oauth/redirect/dummyjson", (_, res) => {
     .catch((e) => {
       res.send(e?.message);
     });
+});
+
+app.get("/logout", (_, res) => {
+  res.sendStatus(200);
 });
 
 app.listen(PORT, () => {

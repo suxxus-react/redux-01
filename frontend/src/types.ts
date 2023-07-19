@@ -28,11 +28,15 @@ export type User = {
 };
 
 export type LoggedIn = {
+  kind: "LoggedIn";
   token: Token<string>;
   user: User;
 };
 
-export type AuthenticationStatus = "Unknown" | LoggedIn | "LoggedOut";
+type Unknown = { kind: "Unknown" };
+type LoggedOut = { kind: "LoggedOut" };
+
+export type AuthenticationStatus = Unknown | LoggedIn | LoggedOut;
 
 export type Auth = {
   status: AuthenticationStatus;

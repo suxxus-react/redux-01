@@ -3,7 +3,10 @@ export default Object.freeze({
 
   ROUTES: {
     HOME: "/",
-    SIGIN: "/signin",
+    AUTH: "/auth",
+    SIGNIN: "/signin",
+    SIGNOUT: "/signout",
+    WELCOME: "/welcome",
   },
 
   //
@@ -13,6 +16,7 @@ export default Object.freeze({
   BASE_URL: process.env.BASE_URL || "",
   API: {
     USER: "/user",
+    USER_LOGOUT: "/user/logout",
   },
 
   GITHUB_AUTH: process.env.GITHUB_AUTH || "/",

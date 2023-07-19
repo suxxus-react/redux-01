@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { Logo } from "../../styles/appStyles";
 import { useToggleThemeContext } from "../../context";
 import { useAppSelector } from "../../app";
-import { AuthenticationStatus, LoggedIn } from "../../types";
+import { AuthenticationStatus } from "../../types";
+import constants from "../../constants";
+
+const { ROUTES } = constants;
 
 const Head = styled.header`
   background-color: var(--header-bg);
@@ -37,16 +40,13 @@ export function Header() {
     toggle((v) => !v);
   };
 
-  console.info(`status: ${JSON.stringify(status)}`);
-
-  switch (status) {
+  switch (status.kind) {
     case "Unknown":
     case "LoggedOut":
       isLoggedIn = false;
       break;
     case "LoggedIn":
       isLoggedIn = true;
-      console.info("is loggedIn", JSON.stringify(status, null, 2));
       break;
   }
 
@@ -54,7 +54,11 @@ export function Header() {
     <Head>
       <Logo data-testid="logo" />
       <Commands>
-        {isLoggedIn && <Link to="/">signout</Link>}
+        {isLoggedIn && (
+          <Link to={ROUTES.SIGNOUT} replace>
+            signout
+          </Link>
+        )}
         <i
           onClick={clickHandler}
           role="button"

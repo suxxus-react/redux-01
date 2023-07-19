@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 
-import { Provider } from "react-redux";
 //
 import { GlobalStyles } from "./styles/globalStyles";
 //
@@ -9,81 +14,122 @@ import { Header, Login, Main } from "./ui";
 //
 import { ToggleThemeContextProvider } from "./context";
 //
-import { Children, LoggedIn, Nothing } from "./types";
+import { Children, Nothing, AuthenticationStatus } from "./types";
 //
 import {
-  store,
   useAppDispatch,
+  useAppSelector,
   useGetGithubUserQuery,
+  useLogoutQuery,
   setAuthentication,
 } from "./app";
 //
-import { getTokenFromStorage, setTokenOnStorage } from "./utils";
+import {
+  getTokenFromStorage,
+  removeTokenFromStorage,
+  setTokenOnStorage,
+} from "./utils";
 //
 import constants from "./constants";
 
 const { ROUTES, API } = constants;
 
 function Providers({ children }: Children): JSX.Element {
-  return (
-    <Provider store={store}>
-      <ToggleThemeContextProvider>{children}</ToggleThemeContextProvider>
-    </Provider>
-  );
+  return <ToggleThemeContextProvider>{children}</ToggleThemeContextProvider>;
 }
 
-function SignIn(): JSX.Element {
+function AuthO(): JSX.Element {
   const [search] = useSearchParams();
   const dispatch = useAppDispatch();
   const token = search.get("access_token");
 
   if (token) {
-    dispatch(setAuthentication("Unknown"));
+    dispatch(setAuthentication({ kind: "Unknown" }));
     setTokenOnStorage(token);
+
+    return <Navigate to={ROUTES.SIGNIN} replace />;
   }
 
+  return <></>;
+}
+
+function SignIn(): JSX.Element {
   const { data, error, isLoading } = useGetGithubUserQuery(API.USER);
-  // console.info("data", data, "isLoading", isLoading, "error", error);
-  //
-  //
+  const dispatch = useAppDispatch();
+
   if (error) {
-    dispatch(setAuthentication("LoggedOut"));
+    dispatch(setAuthentication({ kind: "LoggedOut" }));
     // TODO consider redirecting to home page ?
     return (
-      <p>{`sorry we have an error fetching user: ${JSON.stringify(error)}`} </p>
+      <>
+        <p>sorry, we have an error fething User</p>
+        <span>{JSON.stringify(error)}</span>
+      </>
     );
   }
-  //
-  // if (isLoading) {
-  //   return <>loading</>;
-  // }
-  //
-  //
+
+  if (isLoading) {
+    return <>loading</>;
+  }
+
   const hasUser = data && data !== Nothing;
 
   if (hasUser) {
     dispatch(setAuthentication(data));
+    return <Navigate to={ROUTES.WELCOME} replace />;
   } else {
-    // TODO erro on decoding user
+    // TODO error on decoding user
     console.info("-> ", "no user");
-    dispatch(setAuthentication("LoggedOut"));
+    dispatch(setAuthentication({ kind: "LoggedOut" }));
   }
 
-  return <>signin</>;
+  return <>SIGNIN</>;
+}
+
+function SignOut(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { data } = useLogoutQuery(API.USER_LOGOUT);
+
+  if (data) {
+    dispatch(setAuthentication({ kind: "LoggedOut" }));
+    removeTokenFromStorage();
+    return <Navigate to={ROUTES.HOME} replace />;
+  }
+
+  // TODO consider getting an error
+
+  return <></>;
 }
 
 export default function App(): JSX.Element {
   const location = useLocation();
-
-  useEffect(() => {
-    const isNotSignin = location.pathname !== ROUTES.SIGIN;
-    // check if other than SignIn
-    if (isNotSignin) {
-      // check if we have the token on storage
-      console.info("location", location.pathname);
-      console.info("token from storage ", getTokenFromStorage());
-    }
-  }, [location]);
+  // const navigate = useNavigate();
+  // const status: AuthenticationStatus = useAppSelector(
+  //   (state) => state.auth.status
+  // );
+  //
+  // // useEffect(() => {
+  // const isNotSignin = location.pathname !== ROUTES.SIGNIN;
+  // const isNotHome = location.pathname !== ROUTES.HOME;
+  // const isNotSignOut = location.pathname !== ROUTES.SIGNOUT;
+  // check if other than SignIn
+  // if (isNotSignin && isNotHome && isNotSignOut) {
+  // check if we have the token on storage
+  console.info("location", location.pathname);
+  // const hasToken = getTokenFromStorage() !== Nothing;
+  // const userTok = status.kind === "LoggedIn" ? status.token : "";
+  //
+  // if (!userTok && !hasToken) {
+  //   console.info(" no token go to logout");
+  //   // return <Navigate to={ROUTES.SIGNOUT} replace />;
+  // }
+  //
+  // if (!userTok && hasToken) {
+  //   console.info("token from storage ", getTokenFromStorage());
+  //   // return <Navigate to={ROUTES.SIGNIN} replace />;
+  // }
+  // }
+  // }, [location]);
 
   return (
     <Providers>
@@ -91,8 +137,10 @@ export default function App(): JSX.Element {
       <Header />
       <Routes>
         <Route path={ROUTES.HOME} element={<Login />} />
-        <Route path={ROUTES.SIGIN} element={<SignIn />} />
-        <Route path="/welcome" element={<Main />} />
+        <Route path={ROUTES.AUTH} element={<AuthO />} />
+        <Route path={ROUTES.SIGNIN} element={<SignIn />} />
+        <Route path={ROUTES.SIGNOUT} element={<SignOut />} />
+        <Route path={ROUTES.WELCOME} element={<Main />} />
       </Routes>
     </Providers>
   );

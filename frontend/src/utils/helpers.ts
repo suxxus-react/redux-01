@@ -22,3 +22,7 @@ export function getTokenFromStorage(): Maybe<Token<string>> {
 export function setTokenOnStorage(value: string) {
   setItem(STORAGE_TOKEN, value);
 }
+
+export function removeTokenFromStorage() {
+  removeItem(STORAGE_TOKEN);
+}
