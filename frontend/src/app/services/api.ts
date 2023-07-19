@@ -1,11 +1,32 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "./axiosBaseQuery";
-import { githubUserDecoder } from "../../utils";
-import constants from "../../constants";
-import { Nothing, GithubUser } from "../../types";
+import { userDecoder } from "../../utils";
 
-const headers = {
-  "X-Auth-Token": "xxxxxsd token",
+import constants from "../../constants";
+import { Maybe, Nothing, AuthenticationStatus, LoggedIn } from "../../types";
+import { store } from "../store";
+import { getTokenFromStorage } from "../../utils";
+
+const headers = () => {
+  const status: AuthenticationStatus = store.getState().auth.status;
+  let value = "";
+  const tok = getTokenFromStorage();
+
+  switch (status) {
+    case "Unknown":
+      value = tok !== Nothing ? tok : "";
+      break;
+    case "LoggedIn":
+      value = String((status as LoggedIn).token);
+      break;
+    default:
+      value = "";
+      break;
+  }
+
+  return {
+    "X-Auth-Token": value,
+  };
 };
 
 const api = createApi({
@@ -17,26 +38,33 @@ const api = createApi({
     return {
       getGithubUser: build.query({
         query: (url: string) => {
-          return { url, method: "GET", headers };
+          return {
+            url,
+            method: "GET",
+            headers: headers(),
+          };
         },
         //
-        transformResponse: (response) => {
-          const responseDecoded = githubUserDecoder(response);
+        transformResponse: (response): Maybe<LoggedIn> => {
+          const responseDecoded = userDecoder(response);
           const decodedOk = responseDecoded !== Nothing;
 
           if (decodedOk) {
-            //
-            const user: GithubUser = {
-              ...responseDecoded,
-              id: responseDecoded.id.toString(),
-              avatar: responseDecoded.avatar_url,
-              email: responseDecoded.email || "",
-            };
+            const { id, name, image, email, token } = responseDecoded;
 
-            return user;
+            return {
+              user: {
+                id,
+                name,
+                image,
+                // TODO do email validation else ""
+                email: email ? email : "",
+              },
+              token,
+            };
           }
 
-          return {};
+          return Nothing;
         },
       }),
     };

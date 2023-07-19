@@ -1,5 +1,5 @@
-import usersJson from "./data.users.json";
+import userJson from "./data.user.json";
 
 export * from "./handlers";
 
-export { usersJson };
+export { userJson };

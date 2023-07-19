@@ -12,8 +12,7 @@ export default Object.freeze({
   //
   BASE_URL: process.env.BASE_URL || "",
   API: {
-    GUITHUB_USER: "/github/user",
-    USERS: "/users",
+    USER: "/user",
   },
 
   GITHUB_AUTH: process.env.GITHUB_AUTH || "/",

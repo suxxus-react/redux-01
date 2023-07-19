@@ -15,7 +15,7 @@ function Page({ url }: { url: string }): JSX.Element {
   let fn;
 
   switch (url) {
-    case API.GUITHUB_USER:
+    case API.USER:
       fn = useGetGithubUserQuery;
       break;
     default:
@@ -50,7 +50,7 @@ describe("Api", () => {
   afterAll(() => server.close());
 
   test("useGetUserDataQuery", async () => {
-    render(<Page url={API.GUITHUB_USER} />, {});
+    render(<Page url={API.USER} />, {});
     //
     await waitFor(() => {
       const username = /"name":"michelle"/i;

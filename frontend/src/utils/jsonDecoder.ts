@@ -1,15 +1,16 @@
 import * as D from "json-decoder";
-import { Maybe, Nothing, GithubUserDto } from "../types";
+import { Maybe, Nothing, UserDto } from "../types";
 
-export function githubUserDecoder(data: unknown): Maybe<GithubUserDto> {
-  const GithubUserDecoder = D.objectDecoder<GithubUserDto>({
+export function userDecoder(data: unknown): Maybe<UserDto> {
+  const UserDecoder = D.objectDecoder<UserDto>({
     id: D.numberDecoder,
     name: D.stringDecoder,
-    avatar_url: D.stringDecoder,
+    image: D.stringDecoder,
     email: D.oneOfDecoders(D.nullDecoder, D.undefinedDecoder, D.stringDecoder),
+    token: D.stringDecoder,
   });
 
-  const decoded = GithubUserDecoder.decode(data);
+  const decoded = UserDecoder.decode(data);
 
   switch (decoded.type) {
     case "ERR":

@@ -9,15 +9,20 @@ import { Header, Login, Main } from "./ui";
 //
 import { ToggleThemeContextProvider } from "./context";
 //
-import { Children } from "./types";
+import { Children, LoggedIn, Nothing } from "./types";
 //
-import { store, useAppDispatch, updateToken } from "./app";
+import {
+  store,
+  useAppDispatch,
+  useGetGithubUserQuery,
+  setAuthentication,
+} from "./app";
 //
 import { getTokenFromStorage, setTokenOnStorage } from "./utils";
 //
 import constants from "./constants";
 
-const { ROUTES } = constants;
+const { ROUTES, API } = constants;
 
 function Providers({ children }: Children): JSX.Element {
   return (
@@ -33,8 +38,35 @@ function SignIn(): JSX.Element {
   const token = search.get("access_token");
 
   if (token) {
+    dispatch(setAuthentication("Unknown"));
     setTokenOnStorage(token);
-    dispatch(updateToken(token));
+  }
+
+  const { data, error, isLoading } = useGetGithubUserQuery(API.USER);
+  // console.info("data", data, "isLoading", isLoading, "error", error);
+  //
+  //
+  if (error) {
+    dispatch(setAuthentication("LoggedOut"));
+    // TODO consider redirecting to home page ?
+    return (
+      <p>{`sorry we have an error fetching user: ${JSON.stringify(error)}`} </p>
+    );
+  }
+  //
+  // if (isLoading) {
+  //   return <>loading</>;
+  // }
+  //
+  //
+  const hasUser = data && data !== Nothing;
+
+  if (hasUser) {
+    dispatch(setAuthentication(data));
+  } else {
+    // TODO erro on decoding user
+    console.info("-> ", "no user");
+    dispatch(setAuthentication("LoggedOut"));
   }
 
   return <>signin</>;

@@ -1,9 +1,9 @@
 import authSlice from "./authSlice";
-import { UserToken } from "../../types";
-import { updateToken } from "./";
+import { Auth, LoggedIn } from "../../types";
+import { setAuthentication } from "./";
 
-const initialState: UserToken = {
-  token: null,
+const initialState: Auth = {
+  status: "LoggedOut",
 };
 
 describe("AuthSlice", () => {
@@ -11,12 +11,34 @@ describe("AuthSlice", () => {
     expect(authSlice(undefined, { type: "" })).toEqual(initialState);
   });
 
-  test("Should update the token", () => {
-    const actual = initialState;
-    const expected = { token: "xyz" };
+  test("Should set the user with token", () => {
+    const authStatus: LoggedIn = {
+      user: {
+        id: 123,
+        name: "joe",
+        image: "http",
+        email: "e@xx",
+      },
+      token: "xx",
+    };
 
-    expect(authSlice(actual, { type: "" })).toEqual(initialState);
+    const actual: Auth = { status: "Unknown" };
 
-    expect(authSlice(actual, updateToken("xyz"))).toEqual(expected);
+    const expected: Auth = {
+      status: {
+        user: {
+          id: 123,
+          name: "joe",
+          image: "http",
+          email: "e@xx",
+        },
+        token: "xx",
+      },
+    };
+
+    expect(authSlice(initialState, setAuthentication("Unknown"))).toEqual(
+      actual
+    );
+    expect(authSlice(actual, setAuthentication(authStatus))).toEqual(expected);
   });
 });

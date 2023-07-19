@@ -18,24 +18,32 @@ export type Theme = {
   isDarkMode: boolean;
 };
 
-export type Token<T> = T | null;
+export type Token<T> = T;
 
-export type UserToken = {
-  token: Token<string> | null;
-};
-
-export type GithubUserDto = {
+export type User = {
   id: number;
   name: string;
-  avatar_url: string;
-  email?: string | null;
+  image: string;
+  email: string;
 };
 
-export type GithubUser = {
-  id: string;
+export type LoggedIn = {
+  token: Token<string>;
+  user: User;
+};
+
+export type AuthenticationStatus = "Unknown" | LoggedIn | "LoggedOut";
+
+export type Auth = {
+  status: AuthenticationStatus;
+};
+
+export type UserDto = {
+  id: number;
   name: string;
-  avatar: string;
-  email: string;
+  image: string;
+  email?: string | null;
+  token: string;
 };
 
 export type UserCard = {

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Logo } from "../../styles/appStyles";
 import { useToggleThemeContext } from "../../context";
 import { useAppSelector } from "../../app";
+import { AuthenticationStatus, LoggedIn } from "../../types";
 
 const Head = styled.header`
   background-color: var(--header-bg);
@@ -26,17 +27,34 @@ const Commands = styled.div`
 
 export function Header() {
   const { isDarkMode, toggle } = useToggleThemeContext();
-  const token = useAppSelector((state) => state.auth.token);
+  const status: AuthenticationStatus = useAppSelector(
+    (state) => state.auth.status
+  );
+
+  let isLoggedIn = false;
 
   const clickHandler = () => {
     toggle((v) => !v);
   };
 
+  console.info(`status: ${JSON.stringify(status)}`);
+
+  switch (status) {
+    case "Unknown":
+    case "LoggedOut":
+      isLoggedIn = false;
+      break;
+    case "LoggedIn":
+      isLoggedIn = true;
+      console.info("is loggedIn", JSON.stringify(status, null, 2));
+      break;
+  }
+
   return (
     <Head>
       <Logo data-testid="logo" />
       <Commands>
-        {token && <Link to="/">signout</Link>}
+        {isLoggedIn && <Link to="/">signout</Link>}
         <i
           onClick={clickHandler}
           role="button"
