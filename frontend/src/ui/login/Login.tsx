@@ -36,7 +36,7 @@ export function Login() {
   return (
     <SignIn>
       <h2>Welcome, please login with</h2>
-      <Link to={constants.GITHUB_AUTH} data-testid="auth-with-github">
+      <Link to={constants.GITHUB_AUTH} data-testid="auth-with-github" replace>
         <i className="fa fa-github" aria-hidden="true"></i>
         <span>Github</span>
       </Link>

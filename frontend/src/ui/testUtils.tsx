@@ -1,20 +1,30 @@
 import React, { ReactElement } from "react";
+import { PreloadedState } from "@reduxjs/toolkit";
+
 import { Provider } from "react-redux";
 
 import "@testing-library/jest-dom";
 
-import { store } from "../app";
 import { ToggleThemeContextProvider } from "../context";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
+import { AppStore, RootState, setupStore } from "../app";
+
 export type Props = {
   route: string;
+  preloadedState: PreloadedState<RootState>;
+  store: AppStore;
 };
 
 function customRender(
   ui: ReactElement,
-  { route = "", ...renderOptions }: Partial<Props>
+  {
+    preloadedState = {},
+    store = setupStore(preloadedState),
+    route = "",
+    ...renderOptions
+  }: Partial<Props>
 ) {
   function wrapper({ children }: { children: React.ReactNode }) {
     return (
