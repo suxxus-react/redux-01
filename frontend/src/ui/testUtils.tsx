@@ -9,7 +9,9 @@ import { ToggleThemeContextProvider } from "../context";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import { AppStore, RootState, setupStore } from "../app";
+import { AppStore, RootState } from "../app";
+
+import { setupStore } from "../app/store";
 
 export type Props = {
   route: string;
@@ -27,6 +29,7 @@ function customRender(
   }: Partial<Props>
 ) {
   function wrapper({ children }: { children: React.ReactNode }) {
+    console.info("---> ", setupStore);
     return (
       <Provider store={store}>
         <ToggleThemeContextProvider>

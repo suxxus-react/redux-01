@@ -41,7 +41,9 @@ describe("<App /> ", () => {
 
     await userEvent.click(screen.getByText("signout"));
 
-    screen.getByText(welcomeMsg);
-    screen.getByText(loginWithGithub);
+    await waitFor(() => {
+      screen.getByText(welcomeMsg);
+      screen.getByText(loginWithGithub);
+    });
   });
 });

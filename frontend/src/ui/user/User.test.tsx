@@ -13,6 +13,7 @@ const Props: UserCard = {
 describe("<User> ", () => {
   test("Render correctly", () => {
     const nameRegex = new RegExp(`${Props.firstName} ${Props.lastName}`, "i");
+    console.info(nameRegex);
     render(<User {...Props} />, {});
     screen.getByTestId("user-preview-img");
     screen.getByTestId("navigate-to-usercard");

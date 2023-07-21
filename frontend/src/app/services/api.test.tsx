@@ -45,6 +45,9 @@ function Page({ url }: { url: string }): JSX.Element {
 }
 
 describe("Api", () => {
+  test("", () => {
+    expect(true).toBe(true);
+  });
   beforeAll(() => server.listen());
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());

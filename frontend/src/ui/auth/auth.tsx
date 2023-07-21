@@ -75,6 +75,8 @@ export function SignOut(): JSX.Element {
   const { data } = useLogoutQuery(API.USER_LOGOUT);
   const navigate = useNavigate();
 
+  console.info(`${ROUTES.SIGNOUT} ${JSON.stringify(data)}`);
+
   useEffect(() => {
     if (data === "OK") {
       //TODO decode data

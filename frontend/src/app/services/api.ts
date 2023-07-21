@@ -1,39 +1,42 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { axiosBaseQuery } from "./axiosBaseQuery";
-import { userDecoder } from "../../utils";
+import "whatwg-fetch";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { userDecoder, getTokenFromStorage } from "../../utils";
 
 import constants from "../../constants";
-import { Maybe, Nothing, AuthenticationStatus, LoggedIn } from "../../types";
-import { store } from "../store";
-import { getTokenFromStorage } from "../../utils";
+import {
+  Maybe,
+  Nothing,
+  AuthenticationStatus,
+  Token,
+  LoggedIn,
+} from "../../types";
 
-const headers = () => {
-  const status: AuthenticationStatus = store.getState().auth.status;
-  let value = "";
-  const tok = getTokenFromStorage();
+import { RootState } from "../store";
 
+function getToken(state: RootState): Token<string> {
+  const status: AuthenticationStatus = state.auth.status;
   switch (status.kind) {
-    case "Unknown":
-      value = tok !== Nothing ? tok : "";
-      break;
     case "LoggedIn":
-      value = status.token;
-      break;
-    default:
-      value = "";
-      break;
+      return status.token;
+    case "LoggedOut":
+    case "Unknown":
+      return ((tok) => {
+        return tok !== Nothing ? tok : "";
+      })(getTokenFromStorage());
   }
+}
 
-  return {
-    "X-Auth-Token": value,
-  };
-};
+const baseQuery = fetchBaseQuery({
+  baseUrl: constants.BASE_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const token = getToken(getState() as RootState);
+    return headers.set("X-Auth-Token", token);
+  },
+});
 
 const api = createApi({
   reducerPath: "Api",
-  baseQuery: axiosBaseQuery({
-    baseUrl: constants.BASE_URL,
-  }),
+  baseQuery,
   endpoints(build) {
     return {
       logout: build.query({
@@ -41,7 +44,7 @@ const api = createApi({
           return {
             url,
             method: "GET",
-            headers: headers(),
+            responseHandler: (response) => response.text(),
           };
         },
       }),
@@ -50,7 +53,6 @@ const api = createApi({
           return {
             url,
             method: "GET",
-            headers: headers(),
           };
         },
         //

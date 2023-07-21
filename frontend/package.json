@@ -65,6 +65,7 @@
     "@types/styled-components": "^5.1.26",
     "@types/testing-library__jest-dom": "^5.14.5",
     "@types/webpack-dev-server": "^4.7.2",
+    "@types/whatwg-fetch": "^0.0.33",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "babel-jest": "^29.4.3",
@@ -105,7 +106,8 @@
     "typescript": "^4.9.5",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^4.11.1",
+    "whatwg-fetch": "^3.6.17"
   },
   "overrides": {
     "postcss": "8.4.21"
