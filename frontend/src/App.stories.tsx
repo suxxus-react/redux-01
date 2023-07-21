@@ -1,8 +1,18 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Provider } from "react-redux";
 import App from "./App";
+import { authStatusLoggedIn } from "./mocks";
 import constants from "./constants";
+import { setupStore } from "./app";
 
 const { ROUTES } = constants;
+
+const store = setupStore({
+  auth: {
+    ...authStatusLoggedIn,
+  },
+});
 
 const app: Meta<typeof App> = {
   title: "App/MainView",
@@ -43,4 +53,15 @@ export const LoggedWelcome: Story = {
       browserPath: ROUTES.WELCOME,
     },
   },
+  decorators: [
+    (Story) => {
+      console.info("---> ", JSON.stringify({ ...store }));
+      console.info("---> ", JSON.stringify({ ...authStatusLoggedIn }));
+      return (
+        <Provider store={store}>
+          <Story />
+        </Provider>
+      );
+    },
+  ],
 };

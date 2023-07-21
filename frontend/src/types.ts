@@ -49,10 +49,3 @@ export type UserDto = {
   email?: string | null;
   token: string;
 };
-
-export type UserCard = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  image: string;
-};

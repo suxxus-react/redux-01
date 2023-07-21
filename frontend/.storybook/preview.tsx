@@ -4,7 +4,7 @@ import type { Preview } from "@storybook/react";
 import { GlobalStyles } from ".././src/styles/globalStyles";
 import { withRouter } from "storybook-addon-react-router-v6";
 import { ToggleThemeContextProvider } from "../src/context";
-import { store } from "../src/app";
+import { setupStore } from "../src/app";
 import { userJson } from "../src/mocks";
 import constants from "../src/constants";
 
@@ -30,7 +30,11 @@ const fetchMock = {
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const DefaultDecorator = (Story: any) => {
   return (
-    <Provider store={store}>
+    <Provider
+      store={setupStore({
+        auth: { status: { kind: "Unknown" } },
+      })}
+    >
       <ToggleThemeContextProvider>
         <GlobalStyles />
         <Story />

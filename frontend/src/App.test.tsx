@@ -36,7 +36,7 @@ describe("<App /> ", () => {
 
     await waitFor(() => {
       screen.getByText(/signout/i);
-      screen.getByText(/welcome name user/i);
+      screen.getByText(/michelle/i);
     });
 
     await userEvent.click(screen.getByText("signout"));
